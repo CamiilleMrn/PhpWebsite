@@ -3,16 +3,16 @@
 ?>
 
 <!DOCTYPE HTML>
-    <html>
-        <header>
-            <meta charset="UTF-8">
+    <html lang="fr">
+        <head>
             <title> Liste des joueurs </title>
+            <meta charset="UTF-8">
             <link rel="stylesheet" href="PlayerList.css">
-        </header>
+        </head>
 
         <body>
             <nav class = "menu">
-                <label class = "logo" href="#"><img src="ProjetPhpPhoto/LogoSite.jpg" alt="Logo du site"/></label>
+                <label class = "logo"><img src="ProjetPhpPhoto/LogoSite.jpg" alt="Logo du site"/></label>
                 <ul>
                     <li> <a class ="active" href="PlayerList.php"> Liste des joueurs</a> </li>
                     <li> <a href="MatchList.php"> Liste des matchs</a> </li>
