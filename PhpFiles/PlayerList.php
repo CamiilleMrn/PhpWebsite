@@ -1,4 +1,11 @@
 <?php
+
+    /*session_start();
+    if (empty($_SESSION['id'])) {
+        header('Location: https://localhost/ProjetPhp/login.php');
+        exit();
+    }*/
+
     $server="localhost";
     $db="projectphp";
     $login="root";
@@ -34,11 +41,6 @@
 
                 <div class="addButton">
                     <button onclick="redirectModify()">Ajouter</button>
-                    <script>
-                        function redirectModify() {
-                            location.href = "AddPlayer.php";
-                        }
-                    </script>
                 </div>
 
                 <div class="tablePlayer">
@@ -50,16 +52,19 @@
                             <th>Action</th>
                         </tr>
                     <?php
-                        $req = $linkpdo->query('select nom, prenom, photo from joueur');
+                        $req = $linkpdo->query('select id,nom, prenom, photo from joueur');
                         if(!$req) {
                             die("Error, can't fetch player list");
                         }
                         while($data = $req->fetch()){
                             echo '<tr>';
-                            echo '<td>'.$data['nom'].'</td>';
-                            echo '<td>'.$data['prenom'].'</td>';
-                            echo '<td>'.$data['photo'].'</td>';
-                            echo '<td>'.'<a href="ModifyPlayer.php">Modifier</a>'." | "."Supprimer".'</td>';
+                                echo '<td>'.$data['nom'].'</td>';
+                                echo '<td>'.$data['prenom'].'</td>';
+                                echo '<td>'.$data['photo'].'</td>';
+                                $id = $data['id'];
+                                $customUrlModif = "ModifyPlayer.php?id=".$id;
+                                $customUrlDelete = "DeletePlayer.php?id=".$id;
+                                echo '<td>'."<a href=".$customUrlModif.">Modifier</a>"." | "."<a href=".$customUrlDelete.">Supprimer</a>".'</td>';
                             echo '</tr>';
                         }
                         echo '</table>';
@@ -70,5 +75,11 @@
             <footer>
 
             </footer>
+
+            <script>
+                function redirectModify() {
+                    location.href = "AddPlayer.php";
+                }
+            </script>
         </body>
     </html>

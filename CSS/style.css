@@ -37,7 +37,7 @@ nav ul li a {
     text-transform: uppercase;
 }
 
-a.active , a:hover {
+nav a.active , nav a:hover {
     background-color: #3b375b;
     color: yellow;
     transition: .5s;
