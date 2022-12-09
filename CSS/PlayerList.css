@@ -43,4 +43,11 @@ a.active , a:hover{
     transition: .5s;
 }
 
+h1.pageTitle{
+    width : 100%;
+    text-align: center;
+    padding: 10px;
+    color: red;
+}
+
 
