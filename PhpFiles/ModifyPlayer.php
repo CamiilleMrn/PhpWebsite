@@ -34,7 +34,7 @@
         $status = $data['Statut'];
         $notes = $data['notes'];
     }
-    //
+
     if (isset($_POST['Button'])) {
         $req = $linkpdo->prepare('UPDATE joueur SET
                                 nom = :nom,
