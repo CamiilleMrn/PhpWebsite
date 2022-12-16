@@ -12,34 +12,6 @@
         <link rel="stylesheet" href="../CSS/style.css">
         <meta charset="utf-8">
 
-        <style>
-            table{
-                margin: auto;
-                border-collapse: collapse;
-                text-align: center;
-                table-layout: fixed;
-                width: 70vw;
-            }
-
-            table td, table th {
-                border: 1px solid #ddd;
-                padding: 8px;
-            }
-
-            table tr:nth-child(even){background-color: #f2f2f2;}
-
-            table tr:hover {background-color: #ddd;}
-
-            table th {
-                padding-top: 12px;
-                padding-bottom: 12px;
-                text-align: center;
-                background-color: #0B0633;
-                color: white;
-            }
-            
-        </style>
-
     </head>
     
     <body>
@@ -82,6 +54,14 @@
                 }
             ?>
         </table>
+        <footer>
+            <div class="footerContent">
+                <h3> Auteurs</h3>
+                <p> Florent Combet <br>
+                    Camille Marion
+                </p>
+            </div>
+        </footer>
     </body>
 </DOCTYPE>
 
