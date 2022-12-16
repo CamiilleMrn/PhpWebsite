@@ -4,6 +4,9 @@
         header('Location: https://localhost/ProjetPhp/login.php');
         exit();
     }*/
+    if(!isset($_GET['id'])) {
+        die ("Id non spécifié");
+    }
     $id = $_GET['id'];
 
     $server="localhost";
@@ -16,6 +19,38 @@
         die('Error : ' . $e->getMessage());
     }
 
+    if (isset($_POST['Button'])) {
+        $nameUpdate = $_POST["name"];
+        $surnameUpdate = $_POST["surname"];
+        $pictureUpdate = $_POST["picture"];
+        $heightUpdate = $_POST["height"];
+        $weightUpdate = $_POST["weight"];
+        $numLicenseUpdate = $_POST["numLicense"];
+        $dateLicenseUpdate = $_POST["DateLicense"];
+        $postUpdate = $_POST["post"];
+        $statusUpdate = $_POST["status"];
+        $notesUpdate = $_POST["note"];
+        $req = $linkpdo->prepare("UPDATE joueur SET
+                                    nom = '$nameUpdate',
+                                    prenom = '$surnameUpdate' ,
+                                    photo = '$pictureUpdate',
+                                    taille = '$heightUpdate',
+                                    poid = '$weightUpdate',
+                                    numeroLicense = '$numLicenseUpdate',
+                                    dateLicense = '$dateLicenseUpdate',
+                                    postePrefere = '$postUpdate',
+                                    Statut = '$statusUpdate',
+                                    notes = '$notesUpdate'
+                                    WHERE id = ?");
+        /*if ($req) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . $req->error;
+        }*/
+        $req->execute([$id]);
+    }
+
+
     $req = $linkpdo-> prepare('select nom, prenom, photo, taille, poid, numeroLicense, dateLicense, postePrefere, 
        Statut, notes from joueur where id = ?');
     $req-> execute([$id]);
@@ -26,7 +61,7 @@
         $name = $data['nom'];
         $surname = $data['prenom'];
         $picture = $data['photo'];
-        $height = $data['photo'];
+        $height = $data['taille'];
         $weight = $data['poid'];
         $numLicense = $data['numeroLicense'];
         $dateLicense = $data['dateLicense'];
@@ -35,35 +70,6 @@
         $notes = $data['notes'];
     }
 
-    if (isset($_POST['Button'])) {
-        $req = $linkpdo->prepare('UPDATE joueur SET
-                                nom = :nom,
-                                prenom = :prenom,
-                                photo = :photo,
-                                taille = :taille,
-                                poid = :poid,
-                                numeroLicense = :numeroLicense,
-                                dateLicense = :dateLicense,
-                                postePrefere = :postePrefere,
-                                Statut = :Statut,
-                                notes = :notes
-                                WHERE id = "$id"');
-        $req->execute(array(
-            'nom' => $_POST['name'],
-            'prenom' => $_POST['surname'],
-            'photo' => $_POST['picture'],
-            'taille' => $_POST['height'],
-            'poid' => $_POST['weight'],
-            'numeroLicense' => $_POST['numLicense'],
-            'dateLicense' => $_POST['DateLicense'],
-            'postePrefere' => $_POST['post'],
-            'Statut' => $_POST['status'],
-            'notes' => $_POST['note'],
-        ));
-        if(!$req){
-            die('Error on update');
-        }
-}
 ?>
 
 <!DOCTYPE>
@@ -81,7 +87,8 @@
             <main class ="modifyPlayerBody">
                 <div class="container">
                     <div class="title">Modification</div>
-                    <form method="post" action="ModifyPlayer.php">
+                    <?PHP $url = "ModifyPlayer.php?id=$id";
+                    echo "<form method='post' action=$url>";?>
                         <div class="playerDetails">
                             <div class="input-box">
                                 <span class="details">Nom</span>
@@ -116,13 +123,13 @@
                             <div class="input-box">
                                 <span class="details">Num licence</span>
                                 <label>
-                                    <input type="text" name ="numLicense" value="<?=$numLicense?>" required>
+                                    <input type="number" name ="numLicense" value="<?=$numLicense?>" required>
                                 </label>
                             </div>
                             <div class="input-box">
                                 <span class="details">Date obtention licence</span>
                                 <label>
-                                    <input type="text" name ="DateLicense" value="<?=$dateLicense?>" required>
+                                    <input type="date" name ="DateLicense" value=<?=$dateLicense?> required>
                                 </label>
                             </div>
                             <div class="input-box">
@@ -156,7 +163,7 @@
                         <div class="button">
                             <input type="submit" name="Button" value="Enregister">
                         </div>
-                    </form>
+                    <?php echo "</form>"?>
                 </div>
             </main>
 
