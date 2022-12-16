@@ -4,6 +4,35 @@
         header('Location: https://localhost/ProjetPhp/login.php');
         exit();
     }*/
+
+    $server="localhost";
+    $db="projectphp";
+    $login="root";
+    $mdp="";
+    try {
+        $linkpdo = new PDO("mysql:host=$server;dbname=$db", $login, $mdp);
+    }catch (Exception $e){
+        die('Error : ' . $e->getMessage());
+    }
+
+    if (isset($_POST['Button'])) {
+        $req = $linkpdo->prepare('INSERT INTO joueur(nom,prenom,photo,taille,poid,numeroLicense,dateLicense,postePrefere,Statut,notes)
+                            VALUES(:nom,:prenom,:photo,:taille,:poid,:numeroLicense,:dateLicense,:postePrefere,:Statut,:notes)');
+        $req->execute(array('nom' => $_POST['name'],
+            'prenom' => $_POST['surname'],
+            'photo' => $_POST['picture'],
+            'taille' => $_POST['height'],
+            'poid' => $_POST['weight'],
+            'numeroLicense' => $_POST['numLicense'],
+            'dateLicense' => $_POST['DateLicense'],
+            'postePrefere' => $_POST['post'],
+            'Statut' => $_POST['status'],
+            'notes' => $_POST['note'],
+        ));
+        if(!$req){
+            die('Error on insert');
+        }
+    }
 ?>
 
 <!DOCTYPE>
@@ -16,24 +45,11 @@
         </head>
 
         <body>
-            <header>
-                <nav class="menu">
-                    <input type="checkbox" id="check">
-                    <label for="check" class="checkBtn">
-                        <i class="fas fa-bars" ></i>
-                    </label>
-                    <label class="logo"><img src="../ProjetPhpPhoto/LogoSite.jpg" alt="Logo du site"/></label>
-                    <ul>
-                        <li> <a class="active" href="PlayerList.php"> Liste des joueurs</a> </li>
-                        <li> <a href="MatchList.php"> Liste des matchs</a> </li>
-                        <li> <a href="StatPage.php"> Statistiques des joueurs</a> </li>
-                    </ul>
-                </nav>
-            </header>
+            <?php include "Menu.php"?>
             <main class ="addPlayerBody">
                 <div class="container">
                     <div class="title">Inscription </div>
-                        <form action="#">
+                        <form method="post" action="AddPlayer.php">
                             <div class="playerDetails">
                                 <div class="input-box">
                                     <span class="details">Nom</span>
@@ -106,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="button">
-                                <input type="submit" value="Inscrire">
+                                <input type="submit" name="Button" value="Inscrire">
                             </div>
                         </form>
                 </div>
