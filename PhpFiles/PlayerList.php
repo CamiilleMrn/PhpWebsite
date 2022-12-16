@@ -27,7 +27,8 @@
         </head>
 
         <body>
-            <?php include "Menu.php"?>
+            <?php $_GET['page'] = 1;
+            include "Menu.php"?>
             <main>
                 <h1 class="pageTitle"> Liste des joueurs </h1>
 
@@ -55,8 +56,8 @@
                                 echo '<td>'.$data['photo'].'</td>';
                                 $id = $data['id'];
                                 $customUrlModif = "ModifyPlayer.php?id=".$id;
-                                $customUrlDelete = "DeletePlayer.php?id=".$id;
-                                echo '<td>'."<a href=".$customUrlModif.">Modifier</a>"." | "."<a href=".$customUrlDelete.">Supprimer</a>".'</td>';
+                                //$customUrlDelete = "DeletePlayer.php?id=".$id;
+                                echo '<td>'."<a href=".$customUrlModif.">Modifier</a>"." | "."<a onClick=confirmationRemove(".$id.")>Supprimer</a>".'</td>';
                             echo '</tr>';
                         }
                         echo '</table>';
@@ -80,3 +81,13 @@
             </script>
         </body>
     </html>
+
+    <script>
+        function confirmationRemove(id) {
+
+
+            var confirmation = confirm("Voulez-vous vraiment supprimer ce joueur ?");
+            if (confirmation) {
+                location.href = "DeletePlayer.php?id="+id;
+            }
+        }
