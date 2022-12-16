@@ -1,4 +1,5 @@
 <?php
+
     if (isset($_GET['page']) && !empty($_GET['page'])) {
         $page = $_GET['page'];
     } else {
@@ -17,7 +18,7 @@
             <li> <a <?php if($page==1) {echo"class='active'";} ?> href="PlayerList.php"> Liste des joueurs</a> </li>
             <li> <a <?php if($page==2) {echo"class='active'";} ?> href="MatchList.php"> Liste des matchs</a> </li>
             <li> <a <?php if($page==3) {echo"class='active'";} ?> href="StatPage.php"> Statistiques des joueurs</a> </li>
-            <li> <a onclick=disconnectPhp() class="Disconnect" href="#">"Déconnexion"</a></li>
+            <li> <a onclick=disconnectPhp() class="Disconnect" href="#">Déconnexion</a></li>
         </ul>
     </nav>
     <script>

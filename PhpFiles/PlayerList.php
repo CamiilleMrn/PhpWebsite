@@ -1,10 +1,10 @@
 <?php
 
-    /*session_start();
+    session_start();
     if (empty($_SESSION['id'])) {
-        header('Location: https://localhost/ProjetPhp/login.php');
+        header('Location: /ProjetPhp/PhpFiles/login.php');
         exit();
-    }*/
+    }
 
     $server="localhost";
     $db="projectphp";

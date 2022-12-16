@@ -2,11 +2,11 @@
 <?php
     session_start();
 	if (empty($_SESSION['id'])) {
-		header('Location: Login.php');
+        header('Location: /ProjetPhp/PhpFiles/login.php');
 		exit();
 	}
 ?>
-<DOCTYPE HTML>
+<!DOCTYPE HTML>
     <head>
         <title>Liste des Matchs</title>
         <link rel="stylesheet" href="../CSS/style.css">
@@ -83,6 +83,6 @@
             ?>
         </table>
     </body>
-</html>
+</DOCTYPE>
 
         
