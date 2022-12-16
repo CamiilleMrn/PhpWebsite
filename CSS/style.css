@@ -12,7 +12,7 @@ body{
     flex-direction: column;
     min-height: 100vh;
 }
-                /* nav bar*/
+/* nav bar*/
 nav{
     height: 80px;
     width: 100%;
@@ -43,6 +43,17 @@ nav ul li a {
     text-transform: uppercase;
 }
 
+nav ul li .Disconnect{
+    border-radius: 30px;
+    background: #3b375b;
+    color: white;
+    padding : 7px 13px;
+    transition: .5s;
+    margin: 0 15px;
+    text-transform: none;
+
+}
+
 nav a.active , nav a:hover {
     background-color: #3b375b;
     color: yellow;
@@ -63,9 +74,9 @@ nav a.active , nav a:hover {
     display: none;
 }
 
-@media (max-width: 952px) {
+@media (max-width: 1285px) {
     label.logo{
-        padding-left: 50px;
+        padding-left: 20px;
     }
 
     nav ul li a {
@@ -73,7 +84,7 @@ nav a.active , nav a:hover {
     }
 }
 
-@media (max-width: 1135px) {
+@media (max-width: 1100px) {
     .checkBtn{
         display: block;
     }
@@ -94,19 +105,154 @@ nav a.active , nav a:hover {
         margin: 50px 0;
         line-height: 30px;
     }
-     nav ul li a {
-         font-size: 20px;
-     }
-     a:hover,a.active{
-         background: none;
-         color: yellow;
-     }
-     #check:checked ~ ul{
-         left: 0;
-     }
+    nav ul li a {
+        font-size: 20px;
+    }
+    nav ul li .Disconnect{
+        color: white;
+    }
+    a:hover,a.active{
+        background: none;
+        color: yellow;
+    }
+    #check:checked ~ ul{
+        left: 0;
+    }
+}
+/* LoginPage CSS*/
+.loginInBody{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0B0633;
+}
+.box{
+    position: relative;
+    width: 380px;
+    height: 420px;
+    background: #3b375b;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-                /* PlayerList css*/
+.box::before{
+    content: '';
+    position: absolute;
+    top:-50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(135deg, #3b375b, yellow);
+    transform-origin: bottom right;
+    animation: animate 6s linear infinite;
+}
+.box::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 380px;
+    height: 420px;
+    background: linear-gradient(135deg, #3b375b, yellow);
+    transform-origin: bottom right;
+    animation: animate 6s linear infinite;
+    animation-delay: -3s;
+}
+
+@keyframes animate {
+    0%
+    {
+        transform: rotate(0deg);
+    }
+    100%
+    {
+        transform: rotate(360deg);
+    }
+}
+.form{
+    position: absolute;
+    inset: 2px;
+    border-radius: 8px;
+    background: #0B0633;
+    z-index: 10;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form h2{
+    color : yellow;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.1em;
+}
+
+.inputBox{
+    position: relative;
+    width: 300px;
+    margin-top: 35px;
+}
+
+.inputBox input{
+    position: relative;
+    width: 100%;
+    padding: 20px 10px 10px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color : #0B0633;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    z-index: 10;
+}
+
+.inputBox span{
+    position: absolute;
+    left: 0;
+    padding: 20px 10px 10px;
+    font-size: 1em;
+    color: gray;
+    transition: 0.5s;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+    color : yellow;
+    transform: translateY(0px) translateY(-34px);
+    font-size: 0.75em;
+}
+
+.inputBox i{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: yellow;
+    border-radius: 4px;
+    transition: 0.5s;
+    pointer-events: none;
+}
+
+.inputBox input:valid ~ i,
+.inputBox input:focus ~ i {
+    height: 44px;
+}
+
+.loginInBody input[type="submit"]{
+    border: none;
+    outline: none;
+    background: yellow;
+    padding: 11px 11px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* PlayerList css*/
 h1.pageTitle{
     width : 100%;
     text-align: center;
@@ -160,7 +306,7 @@ th {
     background-color: #0B0633;
     color: white;
 }
-                /* AddPlayer css*/
+/* AddPlayer css*/
 .addPlayerBody, .modifyPlayerBody{
     display: flex;
     height: 100vh;

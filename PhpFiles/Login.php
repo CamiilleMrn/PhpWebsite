@@ -25,55 +25,36 @@
 	
 ?>
 <!DOCTYPE HTML>
-<html>
-
-	<head>
-		<style>
-			#sectionLogin {
-				text-align:center;
-				position:absolute;
-				top: 50%;
-				margin-top: -100px;
-				left: 40%;
-				right: 40%;
-			}
-			.texteErreur {
-				color : red;
-				position: fixed;
-				left: 50%;
-				transform: translate(-50%, 0);
-			}
-			
-			fieldset{
-			  border-color: blue;
-			  border-style: solid;
-			}
-			
-			fieldset > *{
-				margin-top:10px;
-			}
-		</style>
-	</head>
-	<body>
-		<section id='sectionLogin'>
-			<form method='post' action='login.php'>
-				<fieldset>
-				<legend>Connection au service du club</legend>
-					<label>Username </label><input type='text' name='username' value=<?php echo $user ?> > <br>
-					<label>Password </label><input type='password' name='password'> <br>
-					<input type='submit' value='Se connecter'>
-					<section style="height: 40px;">
-					<?php
-						if (isset($_POST['username']) || isset($_POST['password'])) {
-							echo "<p class = 'texteErreur'> Erreur de connexion, veuillez ressayer</p>";
-						}
-					?>
-					</section>
-				</fieldset>	
-			
-			</form>
-		</section>
-		
-
+<html lang="fr">
+    <head>
+        <title> Ajouter un joueur </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../CSS/style.css">
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    </head>
+	<body class="loginInBody">
+        <div class="box">
+            <div class="form">
+                <h2> Connexion </h2>
+                <form method="post" action="Login.php">
+                    <div class="inputBox">
+                        <input type="text" name='username' value="<?php echo $user ?>" required="required">
+                        <span>Nom d'utilisateur</span>
+                        <i></i>
+                    </div>
+                    <div class="inputBox">
+                        <input type="password" name ="password" required="required">
+                        <span>Mot de passe</span>
+                        <i></i>
+                    </div>
+                    <input type="submit" value="Connexion">
+                    <?php
+                    if(isset($_POST['username']) || isset($_POST['password'])){
+                        echo "<p class = 'texteErreur'> Erreur de connexion, veuillez ressayer</p>";
+                    }
+                    ?>
+                </form>
+            </div>
+        </div>
 	</body>
 </html>
