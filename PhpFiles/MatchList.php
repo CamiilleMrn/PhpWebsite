@@ -41,7 +41,7 @@
                     </tr>
                     <?php
                         $reponse = $bdd->query("SELECT id, nom, date, heure, lieu FROM Rencontre");
-                        if ($reponse==false) {
+                        if (!$reponse) {
                             die('Erreur, impossible de récuperer la liste des matchs');
                         }
                         while ($donnees = $reponse->fetch())
@@ -69,6 +69,5 @@
             </div>
         </footer>
     </body>
-</DOCTYPE>
 
         
