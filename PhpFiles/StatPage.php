@@ -11,18 +11,26 @@
         <head>
             <title> Liste des joueurs </title>
             <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="../CSS/style.css">
-            <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         </head>
 
         <body>
-            <?php
-            $_GET['id']=3;
+            <?php $_GET['page'] = 3;
             include "Menu.php"
             ?>
+            <main class="mainStatPage">
+                <div class="left">
+                    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+                    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+                    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+                    <div class="pie">
 
-            <main>
+                    </div>
+                </div>
+                <div class="right">
 
+                </div>
             </main>
 
             <footer>

@@ -57,7 +57,7 @@
                                 $id = $data['id'];
                                 $customUrlModif = "ModifyPlayer.php?id=".$id;
                                 //$customUrlDelete = "DeletePlayer.php?id=".$id;
-                                echo '<td>'."<a href=".$customUrlModif.">Modifier</a>"." | "."<a onClick=confirmationRemove(".$id.")>Supprimer</a>".'</td>';
+                                echo '<td>'."<button onClick=modif(".$id.")>Modifier</button>"."  |  "."<button onClick=confirmationRemove(".$id.")>Supprimer</button>".'</td>';
                             echo '</tr>';
                         }
                         echo '</table>';
@@ -78,16 +78,16 @@
                 function redirectModify() {
                     location.href = "AddPlayer.php";
                 }
+                function modif(id){
+                    location.href = "ModifyPlayer.php?id="+id;
+                }
+                function confirmationRemove(id) {
+                    let text = "Confirmer la suppression du joueur ?";
+                    if (confirm(text)) {
+                        location.href = "DeletePlayer.php?id="+id;
+                    }
+                }
+
             </script>
         </body>
     </html>
-
-    <script>
-        function confirmationRemove(id) {
-
-
-            var confirmation = confirm("Voulez-vous vraiment supprimer ce joueur ?");
-            if (confirmation) {
-                location.href = "DeletePlayer.php?id="+id;
-            }
-        }
