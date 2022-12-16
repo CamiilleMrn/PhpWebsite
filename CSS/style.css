@@ -161,7 +161,7 @@ th {
     color: white;
 }
                 /* AddPlayer css*/
-.addPlayerBody{
+.addPlayerBody, .modifyPlayerBody{
     display: flex;
     height: 100vh;
     justify-content: center;

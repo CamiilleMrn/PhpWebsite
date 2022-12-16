@@ -45,7 +45,8 @@
         </head>
 
         <body>
-            <?php include "Menu.php"?>
+            <?php $_GET['page'] = 1;
+            include "Menu.php"?>
             <main class ="addPlayerBody">
                 <div class="container">
                     <div class="title">Inscription </div>
@@ -72,13 +73,13 @@
                                 <div class="input-box">
                                     <span class="details">Taille</span>
                                     <label>
-                                        <input type="number" name ="height" placeholder="Entrez la taille" required>
+                                        <input type="number" step="0.01" name ="height" placeholder="Entrez la taille" required>
                                     </label>
                                 </div>
                                 <div class="input-box">
                                     <span class="details">Poids</span>
                                     <label>
-                                        <input type="number" name ="weight" placeholder="Entrez le poid" required>
+                                        <input type="number" step="0.01" name ="weight" placeholder="Entrez le poid" required>
                                     </label>
                                 </div>
                                 <div class="input-box">
