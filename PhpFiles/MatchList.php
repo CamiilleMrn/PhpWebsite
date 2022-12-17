@@ -52,8 +52,8 @@
                             echo '<td>'.$donnees['nom'].'</td>';
                             echo '<td>'.$donnees['lieu'].'</td>';
                             echo '<td>'.$dateFormate." ".$heureFormate.'</td>';
-                            echo '<td><a href="listeEquipe.php?id='.$donnees['id'].'">Voir Equipe</a></td>';
-                            echo '<td><a href="listeResultat.php?id='.$donnees['id'].'">Voir Resultat</a></td>';
+                            echo '<td><a href="setTeam.php?id='.$donnees['id'].'">Voir Equipe</a></td>';
+                            echo '<td><a href="listeResultat.php?id='.$donnees['id'].'">Resultat du match</a></td>';
                             echo '</tr>';
                         }
                     ?>
