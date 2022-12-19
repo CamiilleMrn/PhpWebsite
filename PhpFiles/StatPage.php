@@ -27,7 +27,7 @@
     function getPoste($donnees, $id) {
         $i = 0;
         $previousId=1;
-        echo "<table>";
+        echo "<table class='innerTable'>";
         while ($i < count($donnees)) {
             if ($donnees[$i]['id'] == $id) {
                 echo "<tr>";
@@ -42,7 +42,7 @@
     function getTitulaire($donnees, $id) {
         $i = 0;
         $previousId=1;
-        echo "<table>";
+        echo "<table class='innerTable'>";
         while ($i < count($donnees)) {
             if ($donnees[$i]['id'] == $id) {
                 echo "<tr>";
@@ -57,7 +57,7 @@
     function getMoyennePerf($donnees, $id) {
         $i = 0;
         $previousId=1;
-        echo "<table>";
+        echo "<table class='innerTable'>";
         while ($i < count($donnees)) {
             if ($donnees[$i]['id'] == $id) {
                 echo "<tr>";
@@ -72,7 +72,7 @@
     function getMatchGagne($donnees, $id, $donneesGen) {
         $i = 0;
         $previousId=1;
-        echo "<table>";
+        echo "<table class='innerTable'>";
         while ($i < count($donnees)) {
             if ($donneesGen[$i]['id'] == $id) {
                 echo "<tr>";
@@ -96,6 +96,19 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="../CSS/style.css">
+            <style>
+                .innerTable {
+                    border: none;
+                    width: 100%;
+                }
+
+                .innerTable td {
+                    border: none;
+                    padding:0;
+                }
+
+                
+            </style>
         </head>
 
         <body>
