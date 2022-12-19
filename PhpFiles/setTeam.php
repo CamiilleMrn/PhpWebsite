@@ -101,12 +101,12 @@
         #if donnees['titulaire'] == 1
         echo "<select name='titulaire[]' required>";
         echo "<option value=''>Entrez le statut du joueur</option>";
-        if ($donnees['titulaire'] == 1) {
+        if ($donnees['estTitulaire'] == 1) {
             echo "<option value='1' selected>Titulaire</option>";
         } else {
             echo "<option value='1'>Titulaire</option>";
         }
-        if ($donnees['titulaire'] == 0) {
+        if ($donnees['estTitulaire'] == 0) {
             echo "<option value='0' selected>Remplaçant</option>";
         } else {
             echo "<option value='0'>Remplaçant</option>";
@@ -172,6 +172,7 @@
 
                     .abnormalities {
                         border: 3px solid red;
+                        background-color: #FFBABA;
                         
                     }
 
@@ -269,8 +270,11 @@
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             cell1.innerHTML = previousRow.cells[0].innerHTML;
+            cell1.getElementsByTagName('select')[0].value = "";
             cell2.innerHTML = previousRow.cells[1].innerHTML;
+            cell2.getElementsByTagName('select')[0].value = "";
             cell3.innerHTML = previousRow.cells[2].innerHTML;
+            cell3.getElementsByTagName('select')[0].value = "";
             cell4.innerHTML = previousRow.cells[3].innerHTML;
 
         }

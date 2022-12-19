@@ -6,7 +6,7 @@
 		exit();
 	}
 
-    $server="127.0.0.1";
+    $server="localhost";
     $db="projectphp";
     $login="root";
     $mdp="";
@@ -53,7 +53,7 @@
                             echo '<td>'.$donnees['lieu'].'</td>';
                             echo '<td>'.$dateFormate." ".$heureFormate.'</td>';
                             echo '<td><a href="setTeam.php?id='.$donnees['id'].'">Voir Equipe</a></td>';
-                            echo '<td><a href="listeResultat.php?id='.$donnees['id'].'">Resultat du match</a></td>';
+                            echo '<td><a href="listResult.php?id='.$donnees['id'].'">Resultat du match</a></td>';
                             echo '</tr>';
                         }
                     ?>
