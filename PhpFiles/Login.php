@@ -50,7 +50,7 @@
                     <input type="submit" value="Connexion">
                     <?php
                     if(isset($_POST['username']) || isset($_POST['password'])){
-                        echo "<p class = 'texteErreur'> Erreur de connexion, veuillez ressayer</p>";
+                        echo "<p class = 'texteErreur'> Identifiant ou mot de passe érroné </p>";
                     }
                     ?>
                 </form>
