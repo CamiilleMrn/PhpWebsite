@@ -95,6 +95,7 @@
             <title> Liste des joueurs </title>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <link rel="stylesheet" href="../CSS/style.css">
             <style>
                 .innerTable {
@@ -116,12 +117,11 @@
             include "Menu.php"
             ?>
             <main class="mainStatPage">
+                <h1> Statistisques des joueurs </h1>
                 <div class="left">
-                    <script src="https://www.amcharts.com/lib/4/core.js"></script>
-                    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
-                    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+                    <script src=""></script>
                     <div class="pie">
-
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
                 <div class="right">
@@ -144,7 +144,7 @@
                                 echo "<tr>";
                                 echo "<td>" . $donnees[$i]['nom'] . " " . $donnees[$i]['prenom'] . "</td>";
                                 echo "<td>" . $donnees[$i]['postePrefere'] . "</td>";
-                                echo "<td>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
+                                echo "<td class>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
                                 echo "<td>" ; getTitulaire($donnees, $donnees[$i]['id']); echo "</td>";
                                 echo "<td>" ; getMoyennePerf($donnees, $donnees[$i]['id']); echo "</td>";
                                 echo "<td>" ; getMatchGagne($donneesMatchGagne, $donnees[$i]['id'], $donnees) ; echo "</td>";
@@ -156,6 +156,9 @@
 
                     </table>
                 </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+                <script src="/ProjetPhp/JS/Chart.js"></script>
             </main>
 
             <footer>
@@ -167,5 +170,4 @@
                 </div>
             </footer>
         </body>
-
     </html>
