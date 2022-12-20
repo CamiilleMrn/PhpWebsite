@@ -35,7 +35,7 @@
     }
 ?>
 
-<!DOCTYPE>
+<!DOCTYPE html>
     <html lang="fr">
         <head>
             <title> Ajouter un joueur </title>
@@ -126,6 +126,7 @@
                                 <input type="submit" name="Button" value="Inscrire">
                             </div>
                         </form>
+                    </div>
                 </div>
             </main>
 

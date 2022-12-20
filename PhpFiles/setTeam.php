@@ -51,9 +51,11 @@
 
     function selectName($bdd, $tournamentId,$donnes) {
         $query = "select nom, prenom, id from joueur";
-        #echo "<input list='playerList' name='playerName' placeholder='Entrez le nom du joueur' required>";
-        #echo "<datalist id='playerList'>";
-        echo "<select name='playerName[]' required>";
+        if ($donnes['statut'] != "Actif") {
+            echo "<select name='playerName[]' class = 'abnormalities' required>";
+        } else {
+            echo "<select name='playerName[]' required>";
+        }
         echo "<option value=''>Entrez le nom du joueur</option>";
         $reponse = $bdd->query($query);
         if (!$reponse) {
@@ -63,10 +65,11 @@
         {
             echo "<option value='".$donneesName['id']."' "; if ($donneesName['id']== $donnes['id']) {echo "selected";}                echo ">".$donneesName['nom']." ".$donneesName['prenom']."</option>";
         }
-        #echo "</datalist>";
         echo "</select>";
 
     }
+
+    
 
     function checkInput(){
         #check if two players have the same id
@@ -92,13 +95,6 @@
     }
 
     function selectTitulaire($bdd, $tournamentId,$donnees) {
-        /*echo "<select name='titulaire[]' required>";
-        echo "<option value='' >Entrez le statut du joueur</option>";
-        echo "<option value='1' >Titulaire</option>";
-        echo "<option value='0'>Remplaçant</option>";
-        echo "</select>";*/
-
-        #if donnees['titulaire'] == 1
         echo "<select name='titulaire[]' required>";
         echo "<option value=''>Entrez le statut du joueur</option>";
         if ($donnees['estTitulaire'] == 1) {
@@ -116,9 +112,12 @@
     }
 
     function selectPoste($bdd, $tournamentId,$donnees) {
-        echo "<select name='poste[]' required>";
-        echo "<option value=''>Entrez le poste du joueur</option>";
-        #poste = passeur, attaquant, receptionneurattaquant, central, libero
+        if ($donnees['postePrefere'] != $donnees['poste']) {
+            echo "<select name='poste[]' class = 'abnormalities' required>";
+        } else {
+            echo "<select name='poste[]' required>";
+        }
+        echo "<option value=''>Entrez le poste du joueur</option>"; 
         if ($donnees['poste'] == "Passeur") {
             echo "<option value='Passeur' selected>Passeur</option>";
         } else {
@@ -148,6 +147,38 @@
         echo "</select>";
         
     }
+
+    //Code select name
+    echo "<script> var htmlName = '<select name=\'playerName[]\' required>' + '<option value=\'\'>Entrez le nom du joueur</option>'";
+    $query = "select nom, prenom, id from joueur";
+    $reponse = $bdd->query($query);
+    if (!$reponse) {
+        die('Erreur, impossible de récuperer la liste des joueurs pour la selection');
+    }
+    while ($donneesName = $reponse->fetch())
+    {
+        echo "+ '<option value=\'".$donneesName['id']."\'>".$donneesName['nom']." ".$donneesName['prenom']."</option>'";
+    }
+    echo "+ '</select>';\n";
+    
+
+    //Code select poste
+    echo "var htmlPoste = '<select name=\'poste[]\' required>' + '<option value=\'\'>Entrez le poste du joueur</option>'";
+    echo "+ '<option value=\'Passeur\'>Passeur</option>'";
+    echo "+ '<option value=\'Attaquant\'>Attaquant</option>'";
+    echo "+ '<option value=\'ReceptionneurAttaquant\'>Receptionneur Attaquant</option>'";
+    echo "+ '<option value=\'Central\'>Central</option>'";
+    echo "+ '<option value=\'Libero\'>Libero</option>'";
+    echo "+ '</select>';\n";
+
+    //Code select titulaire
+    echo "var htmlTitulaire = '<select name=\'titulaire[]\' required>' + '<option value=\'\'>Entrez le statut du joueur</option>'";
+    echo "+ '<option value=\'1\'>Titulaire</option>'";
+    echo "+ '<option value=\'0\'>Remplaçant</option>'";
+    echo "+ '</select>';\n";
+    echo "</script>\n";
+
+
     
 ?>
 
@@ -171,9 +202,12 @@
                     }
 
                     .abnormalities {
-                        border: 3px solid red;
                         background-color: #FFBABA;
                         
+                    }
+
+                    .abnormalities option:hover {
+                        box-shadow: 0 0 10px 100px #1882A8 inset;
                     }
 
                     select::-ms-expand { display: none; }
@@ -187,6 +221,21 @@
                     #tableAddPlayer {
                         width: 50%;
                         float: left;
+                    }
+
+                    #tableAddPlayer .tooltipSuggestion{
+                        display: none;
+                        position: absolute;
+                        background-color: #555;
+                        color: #fff;
+                        text-align: center;
+                        padding: 20px;
+                        /* Position the tooltip */
+                        z-index: 1;
+                    }
+
+                    #tableAddPlayer td:hover .tooltipSuggestion {
+                        display : block;
                     }
 
                     /*Bouton supprimer au milieu de sa cellule*/
@@ -228,17 +277,26 @@
                                     }
                                     while ($donnees = $reponse->fetch())
                                     {
+                                        
+                                        
+                                        
+                                        echo "<tr>";
+                                        echo '<td>';selectName($bdd, $tournamentId,$donnees);
                                         if ($donnees["statut"] != 'Actif') {
-                                            echo "<tr class = 'abnormalities'>";
-                                        } else {
-                                            echo "<tr>";
+                                            $texteTooltip = "/!\\<br> Attention, Le statut du joueur est ".$donnees['statut'];
+                                            echo "<span class='tooltipSuggestion'>$texteTooltip</span>";
                                         }
-                                        echo '<td>';selectName($bdd, $tournamentId,$donnees);echo '</td>';
+                                        echo '</td>';
                                         echo '<td>';selectTitulaire($bdd, $tournamentId,$donnees);echo '</td>';
-                                        echo '<td>';selectPoste($bdd, $tournamentId,$donnees);echo '</td>';
-                                        echo '<td><button type="button" onclick="deleteRow(this)">Supprimer</button></td>';
+                                        echo '<td>';selectPoste($bdd, $tournamentId,$donnees);
+                                        if ($donnees["postePrefere"] != $donnees["poste"]) {
+                                            $texteTooltip = "/!\\<br> Attention, le poste préféré du joueur est ".$donnees['postePrefere'];
+                                            echo "<span class='tooltipSuggestion'>$texteTooltip</span>";
+                                        }
+                                        echo '</td>';
+                                        echo '<td><button type="button" onclick="deleteRow(this)">Supprimer</button>';echo '</td>';
                                         if ($donnees["statut"] != 'Actif') {
-                                            echo "<td>Joueur ".$donnees['statut']."</td>";
+                                            echo "<td>Joueur ".$donnees['statut'];echo "</td>";
                                         }
                                         echo '</tr>';
                                     }
@@ -269,13 +327,10 @@
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
-            cell1.innerHTML = previousRow.cells[0].innerHTML;
-            cell1.getElementsByTagName('select')[0].value = "";
-            cell2.innerHTML = previousRow.cells[1].innerHTML;
-            cell2.getElementsByTagName('select')[0].value = "";
-            cell3.innerHTML = previousRow.cells[2].innerHTML;
-            cell3.getElementsByTagName('select')[0].value = "";
-            cell4.innerHTML = previousRow.cells[3].innerHTML;
+            cell1.innerHTML = htmlName;
+            cell2.innerHTML = htmlTitulaire;
+            cell3.innerHTML = htmlPoste;
+            cell4.innerHTML = "<button type='button' onclick='deleteRow(this)'>Supprimer</button>";
 
         }
 

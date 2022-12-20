@@ -30,6 +30,9 @@
         <main>
             <h1 class="pageTitle"> Liste des Matchs </h1>
         <!-- Affichage du tableau des matchs avec le noom, le lieu, la date, un bouton voir equipe par ligne et un bouton voir resultat   -->
+            <div class="addButton">
+                <a href="addMatch.php"><button>Ajouter</button></a>
+            </div>
             <div class="tablePlayer">
                 <table>
                     <tr>

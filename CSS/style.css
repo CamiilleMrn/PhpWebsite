@@ -432,6 +432,71 @@ form .button input:hover{
     }
 }
 
+/* Add Match css*/
+
+.addMatchBody {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0B0633, yellow );
+}
+
+.container form .matchDetails{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+}
+
+form .matchDetails .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 - 20px);
+}
+
+.matchDetails .input-box input , .matchDetails .input-box select{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border : 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.matchDetails .input-box input:focus , .matchDetails .input-box input:valid{
+    border-color: #3b375b ;
+}
+
+.matchDetails .input-box select:focus, .matchDetails .input-box select:valid{
+    border-color: #3b375b ;
+}
+
+.matchDetails .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 584px) {
+    form .matchDetails .input-box{
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .container form .matchDetails{
+        max-height:  300px;
+        overflow: scroll;
+    }
+
+    .matchDetails::-webkit-scrollbar{
+        width: 0;
+    }
+}
+
+
 /*StatPage CSS*/
 
 .mainStatPage h1{
