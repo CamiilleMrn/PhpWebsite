@@ -2,8 +2,8 @@ let ctx = document.getElementById('myChart').getContext('2d');
 let labels = ['Match gagnés', 'Match perdus'];
 let colorHex = ['#0B0633', 'yellow'];
 
-var matchGagnes = document.getElementById('myDiv').getAttribute('data-my-var');
-var matchPerdus = document.getElementById('myDiv1').getAttribute('data-my-var1');
+var matchPerdus = document.getElementById('myDiv').getAttribute('data-my-var');
+var matchGagnes = document.getElementById('myDiv1').getAttribute('data-my-var1');
 
 let myChart = new Chart(ctx, {
     type: 'pie',

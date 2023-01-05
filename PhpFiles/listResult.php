@@ -23,12 +23,12 @@
 
     function checkInputScore($scoreAdv, $scoreNous) {
         #Si une equipe a plus de set que l'autre, sachant qu'un set est gagne a 21 points avec 2 points décisif d'avance sur l'adversaire
-        #Si il y a 2 set à 2 sets, il faut que l'un des deux gagne le 3eme set à 15 points avec 2 points décisif d'avance sur l'adversaireù
+        #Si il y a 2 set à 2 sets, il faut que l'un des deux gagne le 3eme set à 15 points avec 2 points décisif d'avance sur l'adversaire
 
         $scoreAdv = explode("-", $scoreAdv);
         $scoreNous = explode("-", $scoreNous);
-        $setGagnéNous = 0;
-        $setGagnéAdv = 0;
+        $setGagneNous = 0;
+        $setGagneAdv = 0;
         $i=0;
         $pointMax = array(25,25,25,25,15);
         while($i<count($scoreAdv)) {
@@ -38,7 +38,7 @@
             echo "<script>console.log('set numero $setNumber, score adv $scoreSetAdv, score nous $scoreSetNous, point max $pointMax[$i]');</script>";
             
 
-            if ($setGagnéAdv >= 3 || $setGagnéNous >= 3) {
+            if ($setGagneAdv >= 3 || $setGagneNous >= 3) {
                 if ($scoreSetAdv != 0 || $scoreSetNous != 0) {
                     echo "<script>alert('Erreur de score : le set numero $setNumber est non joué et doit avoir un score de 0');</script>";
                     return false;
@@ -61,9 +61,9 @@
             }
 
             if ($scoreSetAdv > $scoreSetNous) {
-                $setGagnéAdv++;
+                $setGagneAdv++;
             } else if ($scoreSetAdv < $scoreSetNous) {
-                $setGagnéNous++;
+                $setGagneNous++;
             } else {
                 echo "<script>alert('Erreur de score : un meme les equipes ne peuvent avoir le meme score set numero $setNumber ');</script>";
                 return false;
@@ -76,7 +76,27 @@
 
     }
 
-
+    function checkWin($scoreAdv, $scoreNous){
+        $scoreAdv = explode("-", $scoreAdv);
+        $scoreNous = explode("-", $scoreNous);
+        $setGagnéNous = 0;
+        $setGagnéAdv = 0;
+        $i =0;
+        while($i<count($scoreAdv)) {
+            $scoreSetAdv = $scoreAdv[$i];
+            $scoreSetNous = $scoreNous[$i];
+            if ($scoreSetAdv > $scoreSetNous) {
+                $setGagnéAdv++;
+            } else {
+                $setGagnéNous++;
+            }
+            $i++;
+        }
+        if($setGagnéAdv > $setGagnéNous){
+            return 0;
+        }
+        return 1;
+    }
 
     if (isset($_POST['submit'])) {
         $i=0;
@@ -91,13 +111,14 @@
         $scoreNotre = $scoreNotre.$_POST['setNotre'][$i];
         if (checkInputScore($scoreAdv, $scoreNotre)) {
             /*Set value of score*/
-            
-
-            $query = $bdd->prepare("UPDATE Rencontre SET resultatAdversaire = :scoreAdv, resultatNotreEquipe = :scoreNotre WHERE id = :id");
+            $win = checkWin($scoreAdv,$scoreNotre);
+            echo $win;
+            $query = $bdd->prepare("UPDATE Rencontre SET resultatAdversaire = :scoreAdv, resultatNotreEquipe = :scoreNotre, victoire = :win WHERE id = :id");
             $query->execute(array(
                 'scoreAdv' => $scoreAdv,
                 'scoreNotre' => $scoreNotre,
-                'id' => $tournamentId
+                'id' => $tournamentId,
+                'win' => $win
             ));
 
             $perf = $_POST['perf'];
@@ -124,7 +145,7 @@
 
 ?>
 
-<html>
+<html lang ="fr">
     <head>
         <title>Inserer resultat</title>
         <link rel="stylesheet" href="../CSS/style.css">
@@ -156,7 +177,7 @@
 
             /* Les noms d'équipes sont chahcun au dessus de leur colonne du tableau */
             table tr:first-child td {
-                text-color:red;
+                color:red;
                 text-align:center;
                 padding-left:8px;
                 background-color:transparent;
