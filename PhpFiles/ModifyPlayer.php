@@ -19,10 +19,42 @@
         die('Error : ' . $e->getMessage());
     }
 
+    $req = $linkpdo-> prepare('select nom, prenom, photo, taille, poid, numeroLicense, dateLicense, postePrefere, 
+           Statut, notes from joueur where id = ?');
+    $req-> execute([$id]);
+    if (!$req){
+        die('Error on select');
+    }
+    while($data = $req->fetch()){
+        $name = $data['nom'];
+        $surname = $data['prenom'];
+        $picture = $data['photo'];
+        $height = $data['taille'];
+        $weight = $data['poid'];
+        $numLicense = $data['numeroLicense'];
+        $dateLicense = $data['dateLicense'];
+        $post = $data['postePrefere'];
+        $status = $data['Statut'];
+        $notes = $data['notes'];
+    }
+
     if (isset($_POST['Button'])) {
+        $targetDir = "../../ProjetPhpPhotoJoueurs/";
+        $targetFile = $targetDir . basename($_FILES['picture']['name']);
+        chmod($targetDir, 0755);
+        if ($_FILES['picture']['name'] != "") {
+            echo "file changed";
+            if (move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
+                $pictureUpdate = $targetDir.$_FILES['picture']['name'];
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }else {
+            echo "file is the same";
+            $pictureUpdate = $picture;
+        }
         $nameUpdate = $_POST["name"];
         $surnameUpdate = $_POST["surname"];
-        $pictureUpdate = $_POST["picture"];
         $heightUpdate = $_POST["height"];
         $weightUpdate = $_POST["weight"];
         $numLicenseUpdate = $_POST["numLicense"];
@@ -48,27 +80,10 @@
             echo "Error updating record: " . $req->error;
         }*/
         $req->execute([$id]);
+
     }
 
 
-    $req = $linkpdo-> prepare('select nom, prenom, photo, taille, poid, numeroLicense, dateLicense, postePrefere, 
-       Statut, notes from joueur where id = ?');
-    $req-> execute([$id]);
-    if (!$req){
-        die('Error on select');
-    }
-    while($data = $req->fetch()){
-        $name = $data['nom'];
-        $surname = $data['prenom'];
-        $picture = $data['photo'];
-        $height = $data['taille'];
-        $weight = $data['poid'];
-        $numLicense = $data['numeroLicense'];
-        $dateLicense = $data['dateLicense'];
-        $post = $data['postePrefere'];
-        $status = $data['Statut'];
-        $notes = $data['notes'];
-    }
 
 ?>
 
@@ -88,7 +103,7 @@
                 <div class="container">
                     <div class="title">Modification</div>
                     <?PHP $url = "ModifyPlayer.php?id=$id";
-                    echo "<form method='post' action=$url>";?>
+                    echo "<form method='post' action=$url enctype='multipart/form-data'> ";?>
                         <div class="playerDetails">
                             <div class="input-box">
                                 <span class="details">Nom</span>
@@ -105,7 +120,7 @@
                             <div class="input-box">
                                 <span class="details">Photo</span>
                                 <label>
-                                    <input type="text" name ="picture" value="<?=$picture?>" required>
+                                    <input type="file" name ="picture">  <span><?php echo $picture?></span>
                                 </label>
                             </div>
                             <div class="input-box">

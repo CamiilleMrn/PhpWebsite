@@ -16,11 +16,23 @@
     }
 
     if (isset($_POST['Button'])) {
+        $targetDir = "../../ProjetPhpPhotoJoueurs/";
+        $targetFile = $targetDir . basename($_FILES['picture']['name']);
+        chmod($targetDir, 0755);
+        if($_FILES['picture']['name'] != "" ) {
+            if (move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
+                echo "The file ". htmlspecialchars( basename( $_FILES["picture"]["name"])). " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        } else {
+            die("No file specified!");
+        }
         $req = $linkpdo->prepare('INSERT INTO joueur(nom,prenom,photo,taille,poid,numeroLicense,dateLicense,postePrefere,Statut,notes)
                             VALUES(:nom,:prenom,:photo,:taille,:poid,:numeroLicense,:dateLicense,:postePrefere,:Statut,:notes)');
         $req->execute(array('nom' => $_POST['name'],
             'prenom' => $_POST['surname'],
-            'photo' => $_POST['picture'],
+            'photo' => $targetDir.$_FILES['picture']['name'],
             'taille' => $_POST['height'],
             'poid' => $_POST['weight'],
             'numeroLicense' => $_POST['numLicense'],
@@ -50,7 +62,7 @@
             <main class ="addPlayerBody">
                 <div class="container">
                     <div class="title">Inscription </div>
-                        <form method="post" action="AddPlayer.php">
+                        <form method="post" action="AddPlayer.php" enctype="multipart/form-data">
                             <div class="playerDetails">
                                 <div class="input-box">
                                     <span class="details">Nom</span>
@@ -67,7 +79,7 @@
                                 <div class="input-box">
                                     <span class="details">Photo</span>
                                     <label>
-                                        <input type="text" name ="picture" placeholder="Entrez la photo" required>
+                                        <input type="file" name ="picture" id ="picture" required>
                                     </label>
                                 </div>
                                 <div class="input-box">
@@ -91,7 +103,7 @@
                                 <div class="input-box">
                                     <span class="details">Date obtention licence</span>
                                     <label>
-                                        <input type="text" name ="DateLicense" placeholder="Entrez la date d'obtention license" required>
+                                        <input type="date" name ="DateLicense" placeholder="Entrez la date d'obtention license" required>
                                     </label>
                                 </div>
                                 <div class="input-box">
@@ -127,7 +139,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
             </main>
 
             <footer>

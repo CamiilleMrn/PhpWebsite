@@ -53,7 +53,13 @@
                             echo '<tr>';
                                 echo '<td>'.$data['nom'].'</td>';
                                 echo '<td>'.$data['prenom'].'</td>';
-                                echo '<td>'.$data['photo'].'</td>';
+                                $photoJ = $data['photo'];
+                                if (file_exists($photoJ) ) {
+                                    chmod($photoJ, 777);
+                                }else{
+                                    echo "file doesnt exist ";
+                                }
+                            echo '<td>'.'<img src="'.$photoJ.'"/>'.'</td>';
                                 $id = $data['id'];
                                 $customUrlModif = "ModifyPlayer.php?id=".$id;
                                 //$customUrlDelete = "DeletePlayer.php?id=".$id;
