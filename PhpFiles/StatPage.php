@@ -20,8 +20,17 @@
     $req = $bdd->prepare("Select joueur.id, nom, prenom,poste, postePrefere,sum(estTitulaire) nbTitulaire , count(idRencontre) nbMatch, avg(Performance) perf from joueur, participer where joueur.id = participer.idJoueur group by idJoueur, poste order by joueur.id asc, poste asc");
     $req->execute();
 
-    $matchGagne = $bdd->prepare("Select joueur.id, count(idRencontre) nbMatchGagne from joueur,participer, rencontre where joueur.id = participer.idJoueur and participer.idRencontre = rencontre.id and resultatNotreEquipe > resultatAdversaire group by joueur.id, poste order by joueur.id asc, poste asc");
+    $matchGagne = $bdd->prepare("Select joueur.id, count(idRencontre) nbMatchGagne from joueur,participer, rencontre where joueur.id = participer.idJoueur and participer.idRencontre = rencontre.id and victoire = 1 group by joueur.id, poste order by joueur.id asc, poste asc");
     $matchGagne->execute();
+
+    $matchGagneTotal = $bdd->prepare("Select count(id) from rencontre where victoire = 1");
+    $matchGagneTotal->execute();
+    $matchGagneTotalFetch = $matchGagneTotal->fetchColumn();
+
+    $matchPerdusTotal = $bdd->prepare("Select count(id) from rencontre where victoire = 0");
+    $matchPerdusTotal->execute();
+    $matchPerdus = $matchPerdusTotal->fetchColumn();
+
 
     #Fonction qui tant que l'id de joueur est le meme que le joueur précédent, on ajoute le poste joué dans un tableau
     function getPoste($donnees, $id) {
@@ -155,10 +164,12 @@
                         ?>
 
                     </table>
+                    <div id="myDiv" data-my-var="<?php echo $matchPerdus;?>"></div>
+                    <div id="myDiv1" data-my-var1="<?php echo $matchGagneTotalFetch;?>"></div>
                 </div>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-                <script src="/ProjetPhp/JS/Chart.js"></script>
+                <script src="../JS/Chart.js"></script>
             </main>
 
             <footer>
