@@ -153,78 +153,7 @@
 
         <style>
 
-            /* Table sur la gauche de la page */
-            #resultatMatch {
-                width:40%;
-                float:left;
-            }
 
-            td + td{
-                text-align:left;
-                padding-left:50px;
-            }
-            /* les deux tables sont cote a cote*/
-            #resultatMatch, #resultatJoueur {
-                display:inline-block;
-                margin-left:50px;
-            }
-
-            /* Table sur la droite de la page */
-            #resultatJoueur {
-                width:50%;
-                float:right;
-            }
-
-            /* Les noms d'équipes sont chahcun au dessus de leur colonne du tableau */
-            table tr:first-child td {
-                color:red;
-                text-align:center;
-                padding-left:8px;
-                background-color:transparent;
-                border: none;
-                padding-bottom:50px;
-                font-size:25px;
-                font-weight:bold;
-            }
-
-            table tr:first-child:hover {
-                background-color:transparent;
-            }
-
-            table tr:first-child td {
-                background-color:transparent;
-                border: none;
-            }
-
-            .nomEquipe:nth-child(1) {
-                margin-left:250px;
-            }
-
-            #setNumber{
-                width:50px;
-                text-align:center;
-            }
-
-            .resultat {
-                width:80%;
-            }
-
-            #score{
-                width:100px;
-            }
-
-            td:nth-child(1) {
-                text-align:center;
-            }
-
-            #resultatJoueur {
-                margin-top:50px;
-            }
-
-            #resultatJoueur table td{
-                text-align:center;
-                padding-top:20px;
-            }
 
             /* Bouton valider en bas au milieu en gros*/
             #valider {
@@ -280,8 +209,8 @@
                                 $iNotre = substr($resultatNotreEquipe, $i*3, 2);
                                 echo '<tr>';
                                 echo '<td>'.($i+1).'</td>';
-                                echo '<td>'; echo "<input type=number onchange=".'if(parseInt(this.value,10)<10)this.value=\'0\'+this.value;'." name='setAdv[]' value = $iAdv step='1' min='0'>"; echo'</td>';
-                                echo '<td>'; echo "<input type=number onchange=".'if(parseInt(this.value,10)<10)this.value=\'0\'+this.value;'." name='setNotre[]' value = $iNotre step='1' min='0'>"; echo'</td>';
+                                echo '<td class="setScore">'; echo "<input type=number onchange=".'if(parseInt(this.value,10)<10)this.value=\'0\'+this.value;'." name='setAdv[]' value = $iAdv step='1' min='0'>"; echo'</td>';
+                                echo '<td class="setScore">'; echo "<input type=number onchange=".'if(parseInt(this.value,10)<10)this.value=\'0\'+this.value;'." name='setNotre[]' value = $iNotre step='1' min='0'>"; echo'</td>';
                                 echo '</tr>';
                                 $i++;
                             }
@@ -316,9 +245,7 @@
                 </div>
                 <input type="submit" id="valider" name="submit" value="Valider">
             </form>
-            <?php include "Footer.php"?>
         </main>
-
-
+        <?php include "Footer.php"?>
     </body>
 </html>

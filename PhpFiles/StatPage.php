@@ -184,7 +184,7 @@
                                     echo "<td>" . $donnees[$i]['Statut'] . "</td>";
                                     echo "<td>" . $donnees[$i]['postePrefere'] . "</td>";
                                     if(isset($_GET['detail'])) {
-                                        echo "<td class>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
+                                        echo "<td>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
                                         echo "<td>" ; getTitulaire($donnees, $donnees[$i]['id']); echo "</td>";
                                         echo "<td>" ; getMoyennePerf($donnees, $donnees[$i]['id']); echo "</td>";
                                         echo "<td>" ; getMatchGagne($donneesMatchGagne, $donnees[$i]['id'], $donnees) ; echo "</td>";

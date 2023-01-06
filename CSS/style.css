@@ -582,6 +582,94 @@ select::-ms-expand { display: none; }
     font-size: 26px;
 }
 
+/*ListResult CSS*/
+
+/* Table sur la gauche de la page */
+#resultatMatch {
+    width:40%;
+    float:left;
+}
+
+td + td{
+    text-align:left;
+}
+
+/* les deux tables sont cote a cote*/
+#resultatMatch, #resultatJoueur {
+    display:inline-block;
+    margin-left:50px;
+}
+
+/* Table sur la droite de la page */
+#resultatJoueur {
+    width:50%;
+    float:right;
+}
+
+/* Les noms d'équipes sont chahcun au dessus de leur colonne du tableau */
+#resultatMatch table tr:first-child td {
+    color:black;
+    text-align:center;
+    padding-left:8px;
+    background-color:transparent;
+    border: none;
+    padding-bottom:50px;
+    font-size:25px;
+    font-weight:bold;
+}
+
+table tr:first-child:hover {
+    background-color:transparent;
+}
+
+table tr:first-child td {
+    background-color:transparent;
+    border: none;
+}
+
+.nomEquipe:nth-child(1) {
+    margin-left:250px;
+}
+
+#setNumber{
+    width:50px;
+    text-align:center;
+}
+
+.resultat {
+    width:80%;
+}
+
+#score{
+    width: 0 auto;
+}
+
+.setScore input{
+    width: 100%;
+}
+
+#resultatJoueur {
+    margin-top:50px;
+}
+
+#resultatJoueur table td{
+    text-align:center;
+    padding-top:20px;
+}
+
+#valider{
+    margin-bottom: 30px;
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #0B0633;
+    border: none;
+    border-radius: 15px;
+}
 
 /*StatPage CSS*/
 
@@ -611,6 +699,25 @@ select::-ms-expand { display: none; }
     display: flex;
     padding: 20px;
     margin-bottom: 30px;
+}
+
+.right table{
+    table-layout: auto;
+}
+
+.mainStatPage .button{
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 20px;
+    margin-bottom: 0px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #0B0633;
+    border: none;
+    border-radius: 15px;
 }
 
 /* CSS footer */
