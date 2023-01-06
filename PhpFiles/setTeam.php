@@ -10,6 +10,7 @@
     }
 
     $tournamentId = $_GET['id'];
+    echo "tournamentID : ".$tournamentId;
     $server="127.0.0.1";
     $db="projectphp";
     $login="root";
@@ -36,6 +37,7 @@
             echo "<script>alert('Equipe enregistrée')</script>";
             $query = "insert into participer (idJoueur, idRencontre, estTitulaire, poste) values ";
             for ($i = 0; $i < count($playerName); $i++) {
+                echo "InsertValues : ".$playerName[$i], $tournamentId, $titulaire[$i], $poste[$i];
                 $query .= "($playerName[$i], $tournamentId, $titulaire[$i], '$poste[$i]')";
                 if ($i != count($playerName) - 1) {
                     $query .= ", ";
@@ -183,7 +185,7 @@
 ?>
 
 <!DOCTYPE HTML>
-    <html>
+    <html lang="fr">
         <head>
             <title>Equipe</title>
             <link rel="stylesheet" href="../CSS/style.css">
@@ -260,7 +262,7 @@
                 
                 <!-- Table sur la gauche de la page -->
 
-                <form method="post" action="./setTeam.php?id=1">
+                <form method="post" action="./setTeam.php?id=<?php echo $tournamentId?>">
                     <div id="tableAddPlayer">
                         
                             <table id='table'>
@@ -309,7 +311,11 @@
 
                     <!-- Bouton valider en bas a droite -->
                     <div id="validateButton">
-                        <input type=submit>Valider</button>
+                        <?php
+                            //echo "<button onClick=setTeam(".$tournamentId.")>Valider</button>";
+                            //cho "<a href='/ProjetPhp/PhpFiles/setTeam.php?id=$tournamentId' >Valider</a>"
+                        ?>
+                        <input type=submit value="Valider"/>
                     </div>
                 </form>
             </main>
@@ -339,7 +345,9 @@
             row.parentNode.removeChild(row);
         }
 
-
+        function setTeam(id){
+            location.href = "/ProjetPhp/PhpFiles/setTeam.php?id="+id;
+        }
 
     </script>
     </html>

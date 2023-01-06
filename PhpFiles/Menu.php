@@ -7,6 +7,7 @@
     }
 ?>
 <header>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <nav class="menu">
         <input type="checkbox" id="check">
         <label for="check" class="checkBtn">

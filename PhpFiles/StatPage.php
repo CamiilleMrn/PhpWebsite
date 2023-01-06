@@ -27,13 +27,11 @@
     $matchGagneTotal->execute();
     $matchGagneTotalFetch = $matchGagneTotal->fetchColumn();
 
-    echo $matchGagneTotalFetch;
 
     $matchPerdusTotal = $bdd->prepare("Select count(id) from rencontre where victoire = 0");
     $matchPerdusTotal->execute();
     $matchPerdus = $matchPerdusTotal->fetchColumn();
 
-    echo $matchPerdus;
 
     #Fonction qui tant que l'id de joueur est le meme que le joueur précédent, on ajoute le poste joué dans un tableau
     function getPoste($donnees, $id) {
