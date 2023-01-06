@@ -214,13 +214,6 @@
                 <script src="../JS/Chart.js"></script>
             </main>
 
-            <footer>
-                <div class="footerContent">
-                    <h3> Auteurs</h3>
-                    <p> Florent Combet <br>
-                        Camille Marion
-                    </p>
-                </div>
-            </footer>
+            <?php include "Footer.php"?>
         </body>
     </html>
