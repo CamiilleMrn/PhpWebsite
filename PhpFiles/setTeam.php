@@ -10,7 +10,6 @@
     }
 
     $tournamentId = $_GET['id'];
-    echo "tournamentID : ".$tournamentId;
     $server="127.0.0.1";
     $db="projectphp";
     $login="root";
@@ -190,68 +189,6 @@
             <title>Equipe</title>
             <link rel="stylesheet" href="../CSS/style.css">
             <meta charset="utf-8">
-            <style>
-                    select {
-                        border: 0;
-                        width: 100%;
-                        height: 100%;
-                        padding-left: 20px;
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        appearance: none;
-                        background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 96%;
- 
-                    }
-
-                    .abnormalities {
-                        background-color: #FFBABA;
-                        
-                    }
-
-                    .abnormalities option:hover {
-                        box-shadow: 0 0 10px 100px #1882A8 inset;
-                    }
-
-                    select::-ms-expand { display: none; }
-
-                    td {
-                        padding : 0;
-                        height:50px;
-                    }
-
-                    /* Tableau sur la gauche de la page */
-                    #tableAddPlayer {
-                        width: 50%;
-                        float: left;
-                    }
-
-                    #tableAddPlayer .tooltipSuggestion{
-                        display: none;
-                        position: absolute;
-                        background-color: #555;
-                        color: #fff;
-                        text-align: center;
-                        padding: 20px;
-                        /* Position the tooltip */
-                        z-index: 1;
-                    }
-
-                    #tableAddPlayer td:hover .tooltipSuggestion {
-                        display : block;
-                    }
-
-                    /*Bouton supprimer au milieu de sa cellule*/
-                    #tableAddPlayer button {
-                        margin: 0 auto;
-                        display: block;
-                    }
-
-                    /*Bouton ajouter un joueur a droite de sa div*/
-                    #addPlayerButton {
-                        float: right;
-                        text-align: right;
-                    }
-            </style>
         </head>
 
         <body>
@@ -268,12 +205,17 @@
                             <table id='table'>
                                 <tr>
                                     <th>Joueur</th>
+                                    <th>Photo</th>
+                                    <th>Taille</th>
+                                    <th>Poids</th>
                                     <th>Titulaire</th>
-                                    <th>Poste</th>
+                                    <th>Poste préféré</th>
+                                    <th>Commentaire</th>
+                                    <th>Evaluation</th>
                                     <th>Supprimer</th>
                                 </tr>
                                 <?php
-                                    $reponse = $bdd->query("SELECT joueur.id, nom, prenom, postePrefere, poste, statut, idRencontre, estTitulaire  FROM joueur, participer where joueur.id = participer.idJoueur and idRencontre = $tournamentId");
+                                    $reponse = $bdd->query("SELECT joueur.id, nom, prenom, photo, taille, poid, notes, postePrefere, poste, statut, idRencontre, estTitulaire  FROM joueur, participer where joueur.id = participer.idJoueur and idRencontre = $tournamentId");
                                     if (!$reponse) {
                                         die('Erreur, impossible de récuperer les joueurs de l\'équipe');
                                     }
@@ -289,6 +231,9 @@
                                             echo "<span class='tooltipSuggestion'>$texteTooltip</span>";
                                         }
                                         echo '</td>';
+                                        echo '<td>'.'<img src='.$donnees['photo'].'>'.'</td>';
+                                        echo '<td>'.$donnees['taille'].'</td>';
+                                        echo '<td>'.$donnees['poid'].'</td>';
                                         echo '<td>';selectTitulaire($bdd, $tournamentId,$donnees);echo '</td>';
                                         echo '<td>';selectPoste($bdd, $tournamentId,$donnees);
                                         if ($donnees["postePrefere"] != $donnees["poste"]) {
@@ -296,6 +241,8 @@
                                             echo "<span class='tooltipSuggestion'>$texteTooltip</span>";
                                         }
                                         echo '</td>';
+                                        echo '<td>'.$donnees['notes'].'</td>';
+                                        echo '<td>'.$donnees['notes'].'</td>';
                                         echo '<td><button type="button" onclick="deleteRow(this)">Supprimer</button>';echo '</td>';
                                         if ($donnees["statut"] != 'Actif') {
                                             echo "<td>Joueur ".$donnees['statut'];echo "</td>";
@@ -319,10 +266,7 @@
                     </div>
                 </form>
             </main>
-
-
-           
-            
+            <?php include "Footer.php"?>
         </body>
     <script>
         function addRow() {
@@ -333,10 +277,15 @@
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+            var cell9 = row.insertCell(8);
             cell1.innerHTML = htmlName;
-            cell2.innerHTML = htmlTitulaire;
-            cell3.innerHTML = htmlPoste;
-            cell4.innerHTML = "<button type='button' onclick='deleteRow(this)'>Supprimer</button>";
+            cell5.innerHTML = htmlTitulaire;
+            cell6.innerHTML = htmlPoste;
+            cell9.innerHTML = "<button type='button' onclick='deleteRow(this)'>Supprimer</button>";
 
         }
 
@@ -344,10 +293,5 @@
             var row = ele.closest('tr');
             row.parentNode.removeChild(row);
         }
-
-        function setTeam(id){
-            location.href = "/ProjetPhp/PhpFiles/setTeam.php?id="+id;
-        }
-
     </script>
     </html>

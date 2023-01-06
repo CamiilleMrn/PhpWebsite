@@ -316,6 +316,7 @@
                 </div>
                 <input type="submit" id="valider" name="submit" value="Valider">
             </form>
+            <?php include "Footer.php"?>
         </main>
 
 

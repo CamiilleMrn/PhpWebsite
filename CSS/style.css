@@ -498,6 +498,90 @@ form .matchDetails .input-box{
     }
 }
 
+/*SetTeam php*/
+select {
+    border: 0;
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 96%;
+
+}
+
+#tableAddPlayer{
+    padding: 50px;
+}
+
+.abnormalities {
+    background-color: #FFBABA;
+
+}
+
+.abnormalities option:hover {
+    box-shadow: 0 0 10px 100px #1882A8 inset;
+}
+
+select::-ms-expand { display: none; }
+
+#tableAddPlayer td{
+    padding: 5px;
+}
+
+#tableAddPlayer .tooltipSuggestion{
+    display: none;
+    position: absolute;
+    background-color: #555;
+    opacity: 0.7;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px;
+    /* Position the tooltip */
+    z-index: 1;
+}
+
+#tableAddPlayer td:hover .tooltipSuggestion {
+    display : block;
+}
+
+/*Bouton supprimer au milieu de sa cellule*/
+#tableAddPlayer button {
+
+    display: block;
+}
+
+/*Bouton ajouter un joueur a droite de sa div*/
+#addPlayerButton, #validateButton input{
+    margin-top: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #0B0633;
+    border: none;
+    border-radius: 15px;
+}
+
+#addPlayerButton{
+    float: right;
+    text-align: right;
+}
+
+#validateButton{
+    display: flex;
+    justify-content: center;
+}
+#validateButton input{
+    margin-bottom: 30px;
+    font-size: 26px;
+}
+
 
 /*StatPage CSS*/
 
