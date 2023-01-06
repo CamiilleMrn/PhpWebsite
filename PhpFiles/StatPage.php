@@ -15,13 +15,27 @@
         die('Erreur : ' . $e->getMessage());
     }
 
+
+
     # Recuparation des données pour le graphique et le tableau de stat
     #Par joueur, on récupère le nom, le prenom, le poste préféré, le nombre de selection en titulaire, le nomnre de selection totale, la moyenne d'évaluation par postes joué, % de match gagné
-    $req = $bdd->prepare("Select joueur.id, nom, prenom,poste, postePrefere,sum(estTitulaire) nbTitulaire , count(idRencontre) nbMatch, avg(Performance) perf from joueur, participer where joueur.id = participer.idJoueur group by idJoueur, poste order by joueur.id asc, poste asc");
-    $req->execute();
+    
 
-    $matchGagne = $bdd->prepare("Select joueur.id, count(idRencontre) nbMatchGagne from joueur,participer, rencontre where joueur.id = participer.idJoueur and participer.idRencontre = rencontre.id and victoire = 1 group by joueur.id, poste order by joueur.id asc, poste asc");
-    $matchGagne->execute();
+    if(isset($_GET['detail'])) {
+        $req = $bdd->prepare("Select joueur.id, nom, prenom,poste, postePrefere, Statut,sum(estTitulaire) nbTitulaire , count(idRencontre) nbMatch, avg(Performance) perf from joueur, participer where joueur.id = participer.idJoueur group by idJoueur, poste order by joueur.id asc, poste asc");
+        $req->execute();
+
+        $matchGagne = $bdd->prepare("Select joueur.id, poste, sum(victoire) nbMatchGagne from joueur,participer, rencontre where joueur.id = participer.idJoueur and participer.idRencontre = rencontre.id group by joueur.id, poste order by joueur.id asc, poste asc");
+        $matchGagne->execute();
+    } else {
+        $req = $bdd->prepare("Select joueur.id, nom, prenom,poste, postePrefere, Statut,sum(estTitulaire) nbTitulaire , count(idRencontre) nbMatch, avg(Performance) perf from joueur, participer where joueur.id = participer.idJoueur group by idJoueur order by joueur.id asc, poste asc");
+        $req->execute();
+
+        $matchGagne = $bdd->prepare("Select joueur.id, poste, sum(victoire) nbMatchGagne from joueur,participer, rencontre where joueur.id = participer.idJoueur and participer.idRencontre = rencontre.id group by joueur.id order by joueur.id asc, poste asc");
+        $matchGagne->execute();
+    }
+
+    
 
     $matchGagneTotal = $bdd->prepare("Select count(id) from rencontre where victoire = 1");
     $matchGagneTotal->execute();
@@ -95,7 +109,7 @@
         echo "</table>";
     }
 
-
+    $previousId = -1;
 
 ?>
 
@@ -134,12 +148,24 @@
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
+                <!-- Bouton detail  -->
+                <?php 
+                    if (isset($_GET['detail'])) {
+                        echo "<a href='StatPage.php' class='button' id='button'>Moins de details</a>";
+                    } else {
+                        echo "<a href='StatPage.php?detail=true' class='button' id='button'>Détails</a>";
+                    }
+
+                ?>
                 <div class="right">
                     <table>
                         <tr>
                             <th>Joueur</th>
+                            <th>Statut</th>
                             <th>Poste préféré</th>
-                            <th>Poste joué</th>
+                            <?php if(isset($_GET['detail'])) {
+                                echo "<th>Poste joué</th>";
+                            } ?>
                             <th>Nombre de fois titulaire</th>
                             <th>Moyenne d'évaluation</th>
                             <th>% de match gagné</th>
@@ -151,15 +177,30 @@
                             $donneesMatchGagne = $matchGagne->fetchall();
                             $i=0;
                             while ($i < count($donnees)) {
-                                echo "<tr>";
-                                echo "<td>" . $donnees[$i]['nom'] . " " . $donnees[$i]['prenom'] . "</td>";
-                                echo "<td>" . $donnees[$i]['postePrefere'] . "</td>";
-                                echo "<td class>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
-                                echo "<td>" ; getTitulaire($donnees, $donnees[$i]['id']); echo "</td>";
-                                echo "<td>" ; getMoyennePerf($donnees, $donnees[$i]['id']); echo "</td>";
-                                echo "<td>" ; getMatchGagne($donneesMatchGagne, $donnees[$i]['id'], $donnees) ; echo "</td>";
-                                echo "<td>" . $donnees[$i]['nbMatch'] . "</td>";
-                                echo "</tr>";
+                                
+                                if ($donnees[$i]['id'] != $previousId) {
+                                    echo "<tr>";
+                                    echo "<td>" . $donnees[$i]['nom'] . " " . $donnees[$i]['prenom'] . "</td>";
+                                    echo "<td>" . $donnees[$i]['Statut'] . "</td>";
+                                    echo "<td>" . $donnees[$i]['postePrefere'] . "</td>";
+                                    if(isset($_GET['detail'])) {
+                                        echo "<td class>" ; getPoste($donnees, $donnees[$i]['id']); echo "</td>";
+                                        echo "<td>" ; getTitulaire($donnees, $donnees[$i]['id']); echo "</td>";
+                                        echo "<td>" ; getMoyennePerf($donnees, $donnees[$i]['id']); echo "</td>";
+                                        echo "<td>" ; getMatchGagne($donneesMatchGagne, $donnees[$i]['id'], $donnees) ; echo "</td>";
+                                    }else {
+                                        echo "<td>" . $donnees[$i]['nbTitulaire'] . "</td>";
+                                        echo "<td>" . $donnees[$i]['perf'] . "</td>";
+                                        $pourcentageMatchGagne = $donneesMatchGagne[$i]['nbMatchGagne'] / $donnees[$i]['nbMatch'] * 100;
+                                        echo "<td>" . $pourcentageMatchGagne . "</td>";
+
+                                    }
+                                    
+                                    echo "<td>" . $donnees[$i]['nbMatch'] . "</td>";
+                                    echo "</tr>";
+                                    $previousId = $donnees[$i]['id'];
+                                }
+                                
                                 $i++;
                             }
                         ?>
