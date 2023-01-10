@@ -50,7 +50,7 @@
     }
 
     function selectName($bdd, $tournamentId,$donnes) {
-        $query = "select nom, prenom, id from joueur";
+        $query = "select id, nom, prenom, statut from joueur where statut = 'Actif' or id in (select idJoueur from participer where idRencontre = $tournamentId)";
         if ($donnes['statut'] != "Actif") {
             echo "<select name='playerName[]' class = 'abnormalities' required>";
         } else {
@@ -63,7 +63,7 @@
         }
         while ($donneesName = $reponse->fetch())
         {
-            echo "<option value='".$donneesName['id']."' "; if ($donneesName['id']== $donnes['id']) {echo "selected";}                echo ">".$donneesName['nom']." ".$donneesName['prenom']."</option>";
+            echo "<option value='".$donneesName['id']."' ";if ($donneesName['id']== $donnes['id']) {echo "selected";} echo ">".$donneesName['nom']." ".$donneesName['prenom']."</option>";
         }
         echo "</select>";
 
