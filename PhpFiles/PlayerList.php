@@ -58,7 +58,7 @@
                                 }else{
                                     echo "file doesnt exist ";
                                 }
-                            echo '<td>'.'<img src="'.$photoJ.'"/>'.'</td>';
+                            echo '<td>'.'<img class="imgResize" src="'.$photoJ.'"/>'.'</td>';
                                 $id = $data['id'];
                                 $customUrlModif = "ModifyPlayer.php?id=".$id;
                                 //$customUrlDelete = "DeletePlayer.php?id=".$id;

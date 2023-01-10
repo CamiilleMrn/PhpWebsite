@@ -16,9 +16,9 @@
         
         <label class="logo"><img src="../ProjetPhpPhoto/LogoSite.jpg" alt="Logo du site"/></label>
         <ul>
-            <li> <a <?php if($page==1) {echo"class='active'";} ?> href="PlayerList.php"> Liste des joueurs</a> </li>
-            <li> <a <?php if($page==2) {echo"class='active'";} ?> href="MatchList.php"> Liste des matchs</a> </li>
-            <li> <a <?php if($page==3) {echo"class='active'";} ?> href="StatPage.php"> Statistiques des joueurs</a> </li>
+            <li> <a <?php if($page==1) {echo"class='active'";} ?> href="PlayerList.php"> Joueurs</a> </li>
+            <li> <a <?php if($page==2) {echo"class='active'";} ?> href="MatchList.php"> Matchs</a> </li>
+            <li> <a <?php if($page==3) {echo"class='active'";} ?> href="StatPage.php"> Statistiques</a> </li>
             <li> <a onclick=disconnectPhp() class="Disconnect" href="#">Déconnexion</a></li>
         </ul>
     </nav>

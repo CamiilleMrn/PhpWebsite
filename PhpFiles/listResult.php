@@ -79,20 +79,20 @@
     function checkWin($scoreAdv, $scoreNous){
         $scoreAdv = explode("-", $scoreAdv);
         $scoreNous = explode("-", $scoreNous);
-        $setGagnéNous = 0;
-        $setGagnéAdv = 0;
+        $setGagneNous = 0;
+        $setGagneAdv = 0;
         $i =0;
         while($i<count($scoreAdv)) {
             $scoreSetAdv = $scoreAdv[$i];
             $scoreSetNous = $scoreNous[$i];
             if ($scoreSetAdv > $scoreSetNous) {
-                $setGagnéAdv++;
+                $setGagneAdv++;
             } else {
-                $setGagnéNous++;
+                $setGagneNous++;
             }
             $i++;
         }
-        if($setGagnéAdv > $setGagnéNous){
+        if($setGagneAdv > $setGagneNous){
             return 0;
         }
         return 1;
@@ -112,7 +112,6 @@
         if (checkInputScore($scoreAdv, $scoreNotre)) {
             /*Set value of score*/
             $win = checkWin($scoreAdv,$scoreNotre);
-            echo $win;
             $query = $bdd->prepare("UPDATE Rencontre SET resultatAdversaire = :scoreAdv, resultatNotreEquipe = :scoreNotre, victoire = :win WHERE id = :id");
             $query->execute(array(
                 'scoreAdv' => $scoreAdv,
@@ -137,11 +136,6 @@
             echo "<script>alert('Resultat enregistre');</script>";
         }
     }
-
-
-
-    
-
 
 ?>
 

@@ -19,8 +19,85 @@
         die('Error : ' . $e->getMessage());
     }
 
+    $fileUpdated = False;
+    if (isset($_POST['Button'])) {
+        $targetDir = "../../ProjetPhpPhotoJoueurs/";
+        $targetFile = $targetDir . basename($_FILES['picture']['name']);
+        chmod($targetDir, 0755);
+        if ($_FILES['picture']['name'] != ""){
+            $fileUpdated =True;
+            $query = $linkpdo-> prepare("UPDATE joueur SET
+                        nom = :nom,
+                        prenom = :prenom ,
+                        photo = :photo,
+                        taille = :taille,
+                        poid = :poid,
+                        numeroLicense = :numLicense,
+                        dateLicense = :dateLicense,
+                        postePrefere = :posteFav,
+                        Statut = :statut,
+                        notes = :note
+                        WHERE id = :id");
+            echo "file changed";
+            if (move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
+                $pictureUpdate = $targetDir . $_FILES['picture']['name'];
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        } else {
+            $query = $linkpdo-> prepare ("UPDATE joueur SET
+                        nom = :nom,
+                        prenom = :prenom ,
+                        taille = :taille,
+                        poid = :poid,
+                        numeroLicense = :numLicense,
+                        dateLicense = :dateLicense,
+                        postePrefere = :posteFav,
+                        Statut = :statut,
+                        notes = :note
+                        WHERE id = :id");
+
+        }
+        $nameUpdate = $_POST["name"];
+        $surnameUpdate = $_POST["surname"];
+        $heightUpdate = $_POST["height"];
+        $weightUpdate = $_POST["weight"];
+        $numLicenseUpdate = $_POST["numLicense"];
+        $dateLicenseUpdate = $_POST["DateLicense"];
+        $postUpdate = $_POST["post"];
+        $statusUpdate = $_POST["status"];
+        $notesUpdate = $_POST["note"];
+
+        if($fileUpdated){
+            $query->execute(array(':nom' => $nameUpdate,
+                ':prenom' => $surnameUpdate,
+                ':photo' => $pictureUpdate,
+                ':taille' => $heightUpdate,
+                ':poid' => $weightUpdate,
+                ':numLicense' => $numLicenseUpdate,
+                ':dateLicense' => $dateLicenseUpdate,
+                ':posteFav' => $postUpdate,
+                ':statut'=> $statusUpdate,
+                ':note' => $notesUpdate,
+                ':id'=> $id
+            ));
+        }else{
+            $query->execute(array(':nom' => $nameUpdate,
+                ':prenom' => $surnameUpdate,
+                ':taille' => $heightUpdate,
+                ':poid' => $weightUpdate,
+                ':numLicense' => $numLicenseUpdate,
+                ':dateLicense' => $dateLicenseUpdate,
+                ':posteFav' => $postUpdate,
+                ':statut'=> $statusUpdate,
+                ':note' => $notesUpdate,
+                ':id'=> $id
+            ));
+        }
+    }
+
     $req = $linkpdo-> prepare('select nom, prenom, photo, taille, poid, numeroLicense, dateLicense, postePrefere, 
-           Statut, notes from joueur where id = ?');
+                   Statut, notes from joueur where id = ?');
     $req-> execute([$id]);
     if (!$req){
         die('Error on select');
@@ -37,53 +114,6 @@
         $status = $data['Statut'];
         $notes = $data['notes'];
     }
-
-    if (isset($_POST['Button'])) {
-        $targetDir = "../../ProjetPhpPhotoJoueurs/";
-        $targetFile = $targetDir . basename($_FILES['picture']['name']);
-        chmod($targetDir, 0755);
-        if ($_FILES['picture']['name'] != "") {
-            echo "file changed";
-            if (move_uploaded_file($_FILES["picture"]["tmp_name"], $targetFile)) {
-                $pictureUpdate = $targetDir.$_FILES['picture']['name'];
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
-        }else {
-            echo "file is the same";
-            $pictureUpdate = $picture;
-        }
-        $nameUpdate = $_POST["name"];
-        $surnameUpdate = $_POST["surname"];
-        $heightUpdate = $_POST["height"];
-        $weightUpdate = $_POST["weight"];
-        $numLicenseUpdate = $_POST["numLicense"];
-        $dateLicenseUpdate = $_POST["DateLicense"];
-        $postUpdate = $_POST["post"];
-        $statusUpdate = $_POST["status"];
-        $notesUpdate = $_POST["note"];
-        $req = $linkpdo->prepare("UPDATE joueur SET
-                                    nom = '$nameUpdate',
-                                    prenom = '$surnameUpdate' ,
-                                    photo = '$pictureUpdate',
-                                    taille = '$heightUpdate',
-                                    poid = '$weightUpdate',
-                                    numeroLicense = '$numLicenseUpdate',
-                                    dateLicense = '$dateLicenseUpdate',
-                                    postePrefere = '$postUpdate',
-                                    Statut = '$statusUpdate',
-                                    notes = '$notesUpdate'
-                                    WHERE id = ?");
-        /*if ($req) {
-            echo "Record updated successfully";
-        } else {
-            echo "Error updating record: " . $req->error;
-        }*/
-        $req->execute([$id]);
-
-    }
-
-
 
 ?>
 

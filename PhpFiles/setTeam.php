@@ -36,7 +36,6 @@
             echo "<script>alert('Equipe enregistrée')</script>";
             $query = "insert into participer (idJoueur, idRencontre, estTitulaire, poste) values ";
             for ($i = 0; $i < count($playerName); $i++) {
-                echo "InsertValues : ".$playerName[$i], $tournamentId, $titulaire[$i], $poste[$i];
                 $query .= "($playerName[$i], $tournamentId, $titulaire[$i], '$poste[$i]')";
                 if ($i != count($playerName) - 1) {
                     $query .= ", ";
@@ -215,7 +214,7 @@
                                     <th>Supprimer</th>
                                 </tr>
                                 <?php
-                                    $reponse = $bdd->query("SELECT joueur.id, nom, prenom, photo, taille, poid, notes, postePrefere, poste, statut, idRencontre, estTitulaire  FROM joueur, participer where joueur.id = participer.idJoueur and idRencontre = $tournamentId");
+                                    $reponse = $bdd->query("SELECT joueur.id, nom, prenom, photo, taille, poid, notes, postePrefere, Performance, poste, statut, idRencontre, estTitulaire  FROM joueur, participer where joueur.id = participer.idJoueur and idRencontre = $tournamentId");
                                     if (!$reponse) {
                                         die('Erreur, impossible de récuperer les joueurs de l\'équipe');
                                     }
@@ -231,7 +230,7 @@
                                             echo "<span class='tooltipSuggestion'>$texteTooltip</span>";
                                         }
                                         echo '</td>';
-                                        echo '<td>'.'<img src='.$donnees['photo'].'>'.'</td>';
+                                        echo '<td>'.'<img class ="imgResize" src='.$donnees['photo'].'>'.'</td>';
                                         echo '<td>'.$donnees['taille'].'</td>';
                                         echo '<td>'.$donnees['poid'].'</td>';
                                         echo '<td>';selectTitulaire($bdd, $tournamentId,$donnees);echo '</td>';
@@ -242,7 +241,7 @@
                                         }
                                         echo '</td>';
                                         echo '<td>'.$donnees['notes'].'</td>';
-                                        echo '<td>'.$donnees['notes'].'</td>';
+                                        echo '<td>'.$donnees['Performance'].'</td>';
                                         echo '<td><button type="button" onclick="deleteRow(this)">Supprimer</button>';echo '</td>';
                                         if ($donnees["statut"] != 'Actif') {
                                             echo "<td>Joueur ".$donnees['statut'];echo "</td>";
