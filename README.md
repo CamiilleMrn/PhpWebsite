@@ -1,7 +1,7 @@
 # PhpWebsite
 
 Php website managing a team of volleyball player, allowing the coach to constitute his teams 
-for various match based on multiple criteria such as evalutation performance, favorite position, 
+for various matchs based on multiple criteria such as evalutation performance, favorite position, 
 ratio of Win/Defeat ...
 
 
