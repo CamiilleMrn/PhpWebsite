@@ -52,7 +52,7 @@ Use style sheets (CSS) and the basics of software ergonomics to ensure that the 
 ## Website
 
 The website is hosted and available at this location :
-https://volleyballcompetition.000webhostapp.com/ProjetPhp/PhpFiles/PlayerList.php
+https://volleyballcompetition.000webhostapp.com/ProjetPhp/PhpFiles/Login.php
 
 ## Credit
 
